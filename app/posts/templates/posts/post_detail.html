@@ -9,5 +9,11 @@
 {% endblock %}
 
 {% block content %}
+{{post.title}}
+<div class="tags">
+   <a href="{{ url_for('posts.tag_detail',slug=tag) }}"><span class="label label-primary">{{tags}}</span></a>
+</div>
+<div class="main-content">
     {{post.body}}
+</div>
 {% endblock %}
