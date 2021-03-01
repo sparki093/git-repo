@@ -1,6 +1,7 @@
 from app import db
 from datetime import datetime
 import re
+from 
 ####### модели для таблиц базы данных
 
 
@@ -9,10 +10,10 @@ def slugify(s):
     return re.sub(pattern,'-',s)
 
 
-post_tags = db.Table('post_tags',
-                      db.Column('post_id',db.Integer,db.ForeignKey('post.id')),
-                      db.Column('tag_id',db.Integer,db.ForeignKey('tag.id'))
-    )
+#post_tags = db.Table('post_tags',
+#                      db.Column('post_id',db.Integer,db.ForeignKey('post.id')),
+#                      db.Column('tag_id',db.Integer,db.ForeignKey('tag.id'))
+#    )
 
 
 class Post(db.Model):
@@ -26,7 +27,7 @@ class Post(db.Model):
         super(Post,self).__init__(*args,**kwargs)
         self.generate_slug()
 
-    tags = db.relationship('Tag',secondary=post_tags,backref=db.backref('posts',lazy='dynamic'))
+    #tags = db.relationship('Tag',secondary=post_tags,backref=db.backref('posts',lazy='dynamic'))
 
     def generate_slug(self):
         if self.title:
@@ -46,3 +47,5 @@ class Tag(db.Model):
     
     def __repr__(self):
         return '<Tag id: {}, name: {}>'.format(self.id,self.name)
+
+##############  FLASK SECURITY
