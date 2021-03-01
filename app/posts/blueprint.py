@@ -26,6 +26,20 @@ def create_post():
     form = PostForm()
     return render_template('posts/create_post.html',form=form)
 
+@posts.route('/<slug>/edit',methods=['POST','GET'])
+def edit_post(slug):
+    post = Post.query.filter(Post.slug==slug).first()
+
+    if request.method == 'POST':
+        form = PostForm(formdata=request.form,obj=post)
+        form.populate_obj(post)#перезапись данных в форме
+        db.session.commit()
+
+        return redirect(url_for('posts.post_detail',slug=post.slug))
+    form = PostForm(obj=post)
+    return render_template('posts/edit_post.html',post=post,form=form)
+
+
 
 
 @posts.route('/')
@@ -56,3 +70,4 @@ def tag_detail(slug):
     tag = Tag.query.filter(Tag.slug==slug).first()
     posts=tag.posts.all()
     return render_template('posts/tag_detail.html',tag = "this is tag",posts='this is posts')
+
